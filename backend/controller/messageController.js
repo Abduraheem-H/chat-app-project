@@ -38,3 +38,23 @@ export const sendMessage = async (req, res) => {
 		res.status(500).json({ error: "Internal Server Error" });
 	}
 }
+
+export const getSendToMessage = async (req, res) => {
+	try {
+		const { id: recieverId } = req.params
+		const senderId = req.user._id
+
+		let conversation = await Conversation.findOne({
+			participants: { $all: [senderId, recieverId] },
+		}).populate("messages")
+
+		if (!conversation) {
+			return res.status(200).json({ messages: [] })
+		}
+
+		return res.status(200).json(conversation.messages);
+	} catch (error) {
+		console.log("Error in getSendToMessage contoller", error.message);
+		res.status(500).json({ error: "Internal Server Error" });
+	}
+}
