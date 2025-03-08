@@ -4,6 +4,8 @@ import cookieParser from "cookie-parser";
 
 import autoRoutes from "./routes/auth.js";
 import messageRoutes from "./routes/messages.js";
+import usersRoutes from "./routes/users.js";
+
 import connectToMongoDB from './db/connectMongoDB.js';
 
 
@@ -18,6 +20,7 @@ app.use(cookieParser()); //
 
 app.use("/api/auth", autoRoutes);
 app.use("/api/messages", messageRoutes);
+app.use("/api/users", usersRoutes);
 
 
 
